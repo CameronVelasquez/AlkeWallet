@@ -58,14 +58,27 @@ main {
     flex-direction: column;
     align-items: center;
 }
-
+/* Menu */
+#mssgPages {
+    margin: 15px 0;
+    font-weight: bold;
+    color: #0d6efd;
+}
 .stretch {
     width: 70%;
     height: min-content;
     margin-top: 15px;
     margin-bottom:8px;
 }
-
+.balanceDigit{
+    color: cadetblue;
+    font-size: xx-large;
+    font-weight: 900;
+    text-align: center;
+}
+main h3{
+    margin-top:1rem;
+}
 /* deposit form */
 #depositAmountForm {
     display: flex;

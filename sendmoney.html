@@ -15,48 +15,63 @@
         <hr>
     </header>
     <main class="container">
+        <h3 id="currentBalance" class="stretch balanceDigit"> $0,00 USD</h3>
         <form class="stretch">
+            
             <div class="form-group">
-                <label>Search the transfer schedule:</label>
-                <input type="text" for="searchContact" class="form-control" name="searchContact" placeholder="Search by name, CBU or email" required>
+                                
+                <label>Search transfer schedule:</label>
                 <button type="submit" id="searchContact" class="btn btn-primary">Search</button>
-                <button type="button" class="btn btn-secondary">Add Contact</button>
+                <input type="text" for="searchContact" class="form-control" name="searchContact" placeholder="Search by name or alias">
+                <!-- Add Contact Modal: -->
+                <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#contactModal">Add Contact</button>
+                <div class="modal fade"id="contactModal">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header"> 
+                                <h5>Add Contact</h5>
+                            </div>
+
+                            <div class="modal-body">
+                                <form id="contactForm" class="form-group">
+                                <input id="contactFirstName" class="form-control mt-2" placeholder="First Name">
+                                <input id="contactLastName" class="form-control mt-2" placeholder="Last Name">                                
+                                <input id="contactCBU" class="form-control mt-2" placeholder="CBU">
+                                <input id="contactAlias" class="form-control mt-2" placeholder="Alias" required>
+                                <input id="contactBank" class="form-control mt-2" placeholder="Bank" required>
+                                <input id="contactEmail" class="form-control mt-2" placeholder="Email" type="email" required>  
+                                </form>              
+                            </div>
+
+                            <div class="modal-footer">
+                                <small class="text-muted">Click outside the modal to close it.</small> 
+                                <button type="button" id="saveContact" class="btn btn-success mt-2" data-dismiss="modal">
+                                    Save Contact
+                                </button>                
+                            </div>
+                  
+                        </div>            
+                    </div>            
+                </div>                
             </div>
             <br>
             <section id="contactSection">
                 <h3>Contacts</h3>
                 <br>
-                <ul id="contactList" class="list-group">
-                    <li class="list-group-item">
-                        <section class="contact-info" >
-                            <h6 class="contact-name">Name: Name Test</h6>
-                            <p>CBU: 11111111-1</p>
-                            <p>Alias: Name Alias</p>
-                            <p>Bank: Bank Test</p>
-                        </section>                    
-                    </li>
-                    <li class="list-group-item">
-                        <section class="contact-info">
-                        <h6 class="contact-name">Name: Name Test</h6>
-                        <p>CBU: 11111111-1</p>
-                        <p>Alias: Name Alias</p>
-                        <p>Bank: Bank Test</p>
-                        </section>
-                    </li>
-                    <li class="list-group-item">
-                        <section class="contact-info">
-                        <h6 class="contact-name">Name: Name Test</h6>
-                        <p class="">CBU: 11111111-1</p>
-                        <p>Alias: Name Alias</p>
-                        <p>Bank: Bank Test</p>
-                        </section>
-                    </li>
-                </ul>
-                <button type="submit" class="btn btn-primary">Send Money</button>
+                <ul id="contactList" class="list-group"></ul>
+                <form class="form-group mt-3" id="sendMoneyForm">
+                    <label for="transferAmount">Amount</label>
+                    <input type="number" id="transferAmount" class="form-control" min="0" step="0.01" placeholder="Enter amount">
+                </form>
+                <button type="button" id="sendMoneyButton" class="btn btn-primary">Send Money</button>
             </section>            
         </form>
         <a href="menu.html"  class="btn btn-secondary" style="text-decoration: none">Return to Menu</a>
     </main>
     <footer></footer>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
