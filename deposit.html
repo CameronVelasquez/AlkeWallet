@@ -16,13 +16,14 @@
     </header>
     <main class="container">
         <form id="depositAmountForm" class="stretch">
-            <label for="depositAmount">Amount: $000000 CLP</label>
-            <input type="number" class="form-control" id="depositAmount" name="depositAmount" placeholder="Enter amount to deposit" required>
-            <button type="submit" class="btn btn-primary">Deposit</button>
+            <label for="depositAmount" id="currentBalance" class="balanceDigit" data-screen="Deposit">Current Balance: $5,00 USD</label>
+            <input type="number" class="form-control" id="depositAmount" placeholder="Enter amount to deposit" required>
+            <button type="button" id="makeDeposit" class="btn btn-primary">Make a Deposit</button>
         </form>
         <a href="menu.html" class="btn btn-secondary return-button" style="text-decoration: none; width: 70%">Return to Menu</a>
     </main>
     <footer></footer>
+    <script src="script.js"></script>
 </body>
 
 </html>
