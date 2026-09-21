@@ -13,14 +13,32 @@
         <hr>
     </header>
     <main class="container">
-        
+        <section class="stretch">
+            <h4 class="stretch text-primary"><strong>Your Transactions</strong></h4>
+            <hr class="my-2 border-top border-secondary">
+
+            <form id="filterForm">
+                <fieldset class="form-group d-flex justify-content-between"> 
+                    <legend class="text-muted mb-md-0"><small>Select to search for a transaction:</small></legend>
+                    <label for="filterTransaction" class="mr-md-2 d-flex align-items-center"><strong>Type</strong></label>
+                    
+                    <select id="filterTransaction" class="form-control">
+                        <option value="All">All</option>
+                        <option value="Deposit">Deposit</option>
+                        <option value="Transfer Sent">Transfer Sent</option>
+                    </select>
+                </fieldset>
+            </form>
+         </section>
+
         <a href="menu.html" class="btn btn-secondary" style="text-decoration: none">Return to Menu</a>
         <div class="stretch">
-            <ul id="transactionList" class="list-group transactionList" ></ul>                
+            <ul id="transactionList" class="list-group transactionList"></ul>
         </div>
         
     </main>
     <footer></footer>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

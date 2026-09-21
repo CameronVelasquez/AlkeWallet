@@ -1,90 +1,116 @@
+console.log("script loaded");
+
 //LOGIN
 /*Login Validator*/
-const btnLogin = document.getElementById('btnLogin');
+$(document).ready(function() {
+    $('#loginForm').submit( function(event) {
+         event.preventDefault();
 
-if (btnLogin) {
-    btnLogin.addEventListener( 'click', () => {
+         let email = $('#email').val();
+         let password = $('#password').val();
 
-    let email = document.getElementById('email').value;
-    let password = document.getElementById('password').value;
+         if ( email === 'admin@alkewallet.com' && 
+            password === 'n2^n66zE#&%x')
+         {
+              alert('You are successfully logged')
+              window.location.href = 'menu.html';
+         } else {
 
-    if(email === 'admin@alkewallet.com' && 
-        password === 'n2^n66zE#&%x') {
-
-        location.href = 'menu.html';
-}   else {
-
-        alert('Email or Password is incorrect');
-        document.getElementById('password').value = '';
-            //return(email);
-} 
+              alert('Email or Password is incorrect');
+              $('password').val();
+              return(email);
+         } 
     });
-}
+
+});
 
 // MENU
-/*Menu Redirect*/
-const buttons = document.querySelectorAll('button[data-page]');
-const mssg = document.getElementById('mssgPages');
+//Menu Redirect
+//if(buttons.length > 0 && !mssg) 
 
-if(buttons.length > 0 && mssg) {
+    $(document).ready(function() {  
+        $('button[data-page]').on('click', function() {
+            $('#mssgPages').text(`Redirecting to ${$(this).data('screen')} page...`);
 
-    for (const button of buttons) {  
-        button.addEventListener('click', () => {
-            mssg.textContent = `Redirecting to ${button.dataset.screen} page...`;
+            let page = $(this).data('page')
 
-            setTimeout(() => {
-                window.location.href = button.dataset.page; 
+            setTimeout(function() {
+                window.location.href = page; 
             }, 2000);
         });
-    };
-}
+    });
+
 
 
 // DEPOSIT  
-
 /*Show Current Balance.*/
-const balanceLabel = document.getElementById('currentBalance');
-
-if (balanceLabel) {
+    $(document).ready(function() {    
     
     let balance = Number(localStorage.getItem('balance')) || 0.00; 
-    balanceLabel.textContent = `$${balance.toFixed(2)} USD`;
-    
-}
+    $('#currentBalance').text(`$${balance.toFixed(2)} USD`);
+});
 
 /*Make a Deposit */
-const makeDeposit = document.getElementById('makeDeposit');
+ $(document).ready(function() {
+    
+    $('#depositAmountForm').submit( function (event) {
+        event.preventDefault();
 
-if (makeDeposit) {
+        let depositAmount = parseFloat($('#depositAmount').val());
 
-    makeDeposit.addEventListener('click', () => {
+        if (isNaN(depositAmount) || ![] ) {
+            $('#alertContainer').html(`
+            <div class="alert alert-success alert-dismissible fade show">
 
-        let depositAmount = Number(document.getElementById('depositAmount').value);
+    Please enter a numeric value.
 
-         if (isNaN(depositAmount)) {
-            alert('Please enter a numeric value for the deposit amount.');
+                <button
+                type="button"
+                class="close"
+                data-dismiss="alert">
+
+                &times;
+
+                </button>
+
+            </div>
+            `);
+            //alert('Please enter a numeric value.');
             return;
         } else if (depositAmount <= 0) {
             alert('Please enter a valid amount to deposit.');
             return;
         } else if (depositAmount > 1000000) {
-            alert('Deposit amount exceeds the maximum limit of $1.000.000,00 USD.');
+             $('#alertContainer').html(`
+            <div class="alert alert-success alert-dismissible fade show">
+
+                Deposit amount exceeds the maximum limit of $1.000.000,00 USD.
+
+                <button
+                type="button"
+                class="close"
+                data-dismiss="alert">
+
+                &times;
+
+                </button>
+
+            </div>
+            `);
+            //alert('Deposit amount exceeds the maximum limit of $1.000.000,00 USD.');
             return;
-        } else {
-            
-            const currentBalance = document.getElementById('currentBalance');
-            
-            if (currentBalance) {
-                
-                let balance = Number(localStorage.getItem('balance')) || 0.00;
+        } 
+                let balance = parseFloat(localStorage.getItem('balance')) || 0.00;
                 /* deposit: */
                 balance += depositAmount;
                 /* update the balance: */
                 localStorage.setItem('balance', balance); 
-                currentBalance.textContent = `$${balance.toFixed(2)} USD`;
+                
+                $('#currentBalance').text(`$${balance.toFixed(2)} USD`);
+
                 /* Save transaction history: */
-                let transactionHistory = JSON.parse(localStorage.getItem('transactionHistory')) || [];
-                let newTransaction = {
+                let transactionsHistory = JSON.parse(localStorage.getItem('transactionsHistory')) || [] ;
+                transactionsHistory.unshift({
                     alias: 'Myself Alias',
                     name: 'Name Test',
                     CBU: "12345678-k",
@@ -92,37 +118,56 @@ if (makeDeposit) {
                     amount: depositAmount,
                     bank: "Bank Test",
                     date: new Date().toDateString()
-                };
-                /* Add the new transaction to the beginning of the history array: */
-                transactionHistory.unshift(newTransaction);
-                /* Show last 10  */
-                let transactionsHistory = transactionHistory.slice(0, 10);
-                localStorage.setItem('transactionHistory', JSON.stringify(transactionsHistory));
-                alert(`You have successfully deposited $${depositAmount.toFixed(2)} USD in your account.`);
-                location.reload();
-          }; 
-            
-        };
+                });
+                //$('#depositMessage').html(`<strong>Great!</strong> You have successfully deposited $${depositAmount.toFixed(2)} USD in your account.`);
+                // Add the new transaction to the beginning of the history array:
+                // Showing last 10 
+                localStorage.setItem('transactionsHistory', JSON.stringify(transactionsHistory.slice(0, 10)));
+                $('#alertContainer').html(`
+                <div class="alert alert-success alert-dismissible fade show d-flex flex-wrap">
+
+                        <strong>Great!</strong> You have successfully deposited $${depositAmount.toFixed(2)} USD in your account.
+
+                        <button
+                        type="button"
+                        class="close"
+                        data-dismiss="alert">
+
+                        &times;
+
+                        </button>
+
+                </div>
+                `);
+                
+                
+                setTimeout(function() {
+                    window.location.href = 'menu.html';
+            }, 4000);
+        });
     });
-}
+
+  
 
 // SEND MONEY
-/* Save new contact form */ 
-const saveContact = document.getElementById('saveContact');
+/* Save contact form */ 
+$(document).ready(function() {
 
-if(saveContact){
+    $('#saveContact').on('click', function() {
 
-    saveContact.addEventListener('click', () => {
-
-        let contacts = JSON.parse(localStorage.getItem('contacts')) || [];
-        let firstName = document.getElementById('contactFirstName').value;
-        let lastName = document.getElementById('contactLastName').value;
-        let CBU = document.getElementById('contactCBU').value;
-        let email = document.getElementById('contactEmail').value;
-        let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        let bank = document.getElementById('contactBank').value;
-
-         if (firstName === "" || lastName === "") {
+        let contacts = JSON.parse(localStorage.getItem('contacts')) || [];        
+        /* Each contact on card info */
+        let firstName = $('#contactFirstName').val();
+        let lastName = $('#contactLastName').val();
+        let CBU = $('#contactCBU').val();
+        let alias = $('#contactAlias').val();
+        let email = $('#contactEmail').val();
+        let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; /* email validator */
+        let bank = $('#contactBank').val();
+        let createdAt = new Date().toDateString();
+        
+                 
+        if (firstName === "" || lastName === "") {
             alert('Please enter both first and last name for the contact.');
             return;
         } else if (CBU === "") {
@@ -137,156 +182,185 @@ if(saveContact){
         } else if (email === "") {
             alert('Please enter an email address for the contact.');
             return;
-        } else if (email !== "" && !emailRegex.test(email)) {
+        } else if (!email === "" || !emailRegex.test(email)) {
             alert('Please enter a valid email address.');
             return;
         }
 
-        let newContact = {
+        contacts.push({
 
             name: `${firstName} ${lastName}`,
-            alias: document.getElementById('contactAlias').value,
-            CBU: document.getElementById('contactCBU').value,
-            bank: document.getElementById('contactBank').value,
-            email: document.getElementById('contactEmail').value
+            alias: alias,
+            CBU: CBU,
+            bank: bank,
+            email: email,
+            createdAt: createdAt
 
-        };
-
-        contacts.push(newContact);
+        });
+    
         localStorage.setItem('contacts', JSON.stringify(contacts));
         alert('Contact added successfully.');
-        location.reload();
+        location.reload();   
+
+   });
+
+});
+
+/* Show contact list */
+$(document).ready(function() {
+
+    if ($('#contactList').length > 0) {
+        
+        let contacts = JSON.parse(localStorage.getItem('contacts')) || [];        
+        
+        contacts.forEach( contact => {            
+            
+            let card = document.createElement('li');       
+            card.className = 'list-group-item';
+            card.innerHTML = `
+            <input type="radio" style="height:25px; width: 25px;" name="selectedContact" value="${contact.alias}">
+            <h5 class='text-center mt-4 mb-4';><strong>${contact.alias}</strong></h5>
+            <hr class="my-2 border-top border-secondary">
+            <p>Name: ${contact.name}</p>
+            <p>Bank: ${contact.bank}</p>
+            <p>Email: ${contact.email}
+            <p>CBU: ${contact.CBU}</p>
+            <p>Creation Date: ${contact.createdAt}</p>
+            `;
+            
+            $('#contactList').append(card);
+            
+        });
+    };
+});
+
+/* Contacts filter */
+$('#searchContact').click(function(event){
+    event.preventDefault();
+
+    let search = $('input[name="searchContact"]').val().toLowerCase();
+
+    $('.list-group-item').each(function(){
+
+        let text = $(this).text().toLowerCase();
+
+        if(text.includes(search))
+            $(this).show();
+        else
+            $(this).hide();
+
     });
-}
 
-/* Show contact list */ 
-const contactList = document.getElementById('contactList');
+});
 
-if (contactList) {
+ $('#sendMoneyButton').hide();
 
-    const contacts = JSON.parse(localStorage.getItem('contacts')) || [];
+ $(document).on('change','input[name="selectedContact"]',function(){
+
+    $('#sendMoneyButton').fadeIn();
+});
+
+/* Send Money */ 
+$(document).ready(function() {
     
-    if (contacts.length === 0 || contacts === '[]') {
-        
-        let noContactsMessage = document.createElement('h5');
-        noContactsMessage.className = 'text-muted text-center mt-4 mb-4';
-        noContactsMessage.textContent = 'You have no contacts saved.';
-        contactList.appendChild(noContactsMessage);
-    } else {    
-        contacts.forEach(contact => {
-        
-
-        let contactCard = document.createElement('li');
-        contactCard.className = 'list-group-item';       
-        
-        contactCard.innerHTML = `
-        <input type="radio" name="selectedContact" value="${contact.alias}">
-        <section class="contact-info">
-                <h5>Name: ${contact.name}</h5>
-                <hr class="my-2 border-top border-secondary">
-                <p>Alias: ${contact.alias}</p>
-                <p>CBU: ${contact.CBU}</p>
-                <p>Bank: ${contact.bank}</p>
-                <p>Email: ${contact.email}</p>
-            </section>
-        `;
-       // renderContactList();
-        contactList.appendChild(contactCard);
-        
-    });
-
-}}
-
-/* Send Money */
-const sendMoneyButton = document.getElementById('sendMoneyButton');
-
-if (sendMoneyButton) {
    
-    sendMoneyButton.addEventListener('click', () => {        
-        const selectedRadio = document.querySelector('input[name="selectedContact"]:checked');
-        const transferAmount = document.getElementById('transferAmount').value;
-
-        if (!selectedRadio) {
-            alert('Please select a contact.');
-            return;
-        } else if (transferAmount === "") {
-            alert('Please enter a valid amount.');
-            return;
-        } else if (isNaN(transferAmount) || parseFloat(transferAmount) <= 0) {
-            alert('Please enter a valid transfer amount.');
-            return;
-        } else if (transferAmount > 1000000){
-            alert('The transfer amount exceeds the maximum limit of $1.000.000 USD.')
-        }
-        // Proceed with the money transfer logic
-        // Deduct the transfer amount from the balance
-        let balance = Number(localStorage.getItem('balance')) || 0.00;
+    console.log('READY');
+    
+    console.log('LLEGUE AL FINAL SENDMONEY');
+    $('#sendMoneyButton').on('click', function() {
+        console.log('BOTON CLICK');
         
-        if (parseFloat(transferAmount) > balance) {
-            alert('Insufficient balance for this transfer.');
-            return;
-        }
-        // Search for the selected contact
-        // from you current list of contacts
-        const contacts = JSON.parse(localStorage.getItem('contacts')) || [];
-        const selectedContact = contacts.find(contact => contact.alias === selectedRadio.value);
-
-        if (!selectedContact) {
-            alert('Contact not found.');
-            return;
-        }
-        // Send Money
-        // Update balance amount
-        // Get transaction history to show
-        balance -= parseFloat(transferAmount);
+        let selectedRadio = $('input[name="selectedContact"]:checked');
+        let transferAmount = parseFloat($('#transferAmount').val());
+        let contacts = JSON.parse(localStorage.getItem('contacts')) || [];    
+        let selectedContact = contacts.find( contact => contact.alias === selectedRadio.val());
+        let balance = Number(localStorage.getItem('balance')) || 0;    
+        let noContacts = $('#noContacts');
+    
+    if(!contacts || contacts.length === 0 ) {
+            let noContacts = document.createElement('h5');
+            noContacts.className = 'text-muted text-center mt-4 mb-4';
+            noContacts.textContent = 'You have no contacts saved.';
+            return;    
+    } else if (selectedRadio.length === 0 || selectedRadio === '[]'){
+        alert('Select a contact.')
+        return;        
+    } else if (isNaN(transferAmount) || transferAmount <= 0){
+        alert('Invalid amount.');
+        return;
+    } else if (transferAmount > 1000000){
+        alert('The transfer amount exceeds the maximum limit of $1.000.000 USD.')
+        return;
+    } else if( transferAmount > balance ) {
+        alert('Insufficient balance');
+        return;    
+    }       
+        balance -= transferAmount;    
         localStorage.setItem('balance', balance);
-        let transactionHistory = JSON.parse(localStorage.getItem('transactionHistory')) || [];
-        const newTransaction = {
+        let transactionsHistory = JSON.parse(localStorage.getItem('transactionsHistory')) || [];
+                    
+        
+        transactionsHistory.unshift({
             alias: selectedContact.alias,
+            name: selectedContact.name,
             type: 'Transfer Sent',
-            amount: parseFloat(transferAmount),
+            amount: transferAmount,
             bank: selectedContact.bank,
             date: new Date().toDateString(),
-            name: selectedContact.name,
             CBU: selectedContact.CBU
-        };
-
-        /* Update transactions.html */
-        transactionHistory.unshift(newTransaction);
-        transactionHistory = transactionHistory.slice(0,10);
-        localStorage.setItem('transactionHistory', JSON.stringify(transactionHistory));
-        alert(`You have successfully sent $${parseFloat(transferAmount).toFixed(2)} USD to ${selectedContact.name}.`);        
-        location.reload();
+        });      
+            
+        localStorage.setItem('transactionsHistory', JSON.stringify(transactionsHistory.slice(0, 10)));
+        alert(`You have successfully transfered $${transferAmount.toFixed(2)} USD to ${selectedContact.name}.`);
+        console.log(selectedContact);
+        console.log(balance);
+        console.log(transactionsHistory);
+        location.reload();           
+        
     });
-}
+});
+
 
 // TRANSACTIONS
 /*Show Transaction History*/
-const transactionList = document.getElementById('transactionList');
-       
-if (transactionList) {
+function showTransactions(filter = 'All') {
+    let transactionsHistory = JSON.parse(localStorage.getItem('transactionsHistory')) || [];
 
-    const transactionHistory = JSON.parse(localStorage.getItem('transactionHistory')) || [];
-    transactionHistory.forEach(transaction => {
+    $('#transactionList').empty();
 
-        let card = document.createElement('li');
-        card.className = 'list-group-item';
-        card.onmouseover = function() { this.style.backgroundColor = 'lightgray'; };
-        card.onmouseout = function() { this.style.backgroundColor = 'white'; };
-        card.innerHTML = `
-             <h5 style="color: cadetblue; text-align: center"><strong>${transaction.alias}</strong></h5>
-             <hr class="my-2 border-top border-secondary">
-             <p>Type: ${transaction.type}</p>
-             <p>Amount: $${transaction.amount.toFixed(2)} USD</p>
-             <p>Bank: ${transaction.bank}</p>
-             <p>Date: ${transaction.date}</p>
-             <p>Name: ${transaction.name}</p>
-             <p>CBU: ${transaction.CBU}</p>
-        `;
-      
-            transactionList.appendChild(card);
+    transactionsHistory.forEach(transaction => {
+        if (filter !== 'All' && transaction.type !== filter) {
+            return;
+        }
+
+        $('#transactionList').append(`
+            <li class="list-group-item" onmouseover="this.style.backgroundColor='lightgray'" onmouseout="this.style.backgroundColor='white'">
+                <h5 style="text-align:center"><strong>${transaction.alias}</strong></h5>
+                <hr class="my-2 border-top border-secondary">
+                <p><strong>Type:</strong> ${transaction.type}</p>
+                <p><strong>Amount:</strong> $${transaction.amount.toFixed(2)} USD</p>
+                <p><strong>Bank:</strong> ${transaction.bank}</p>
+                <p><strong>Date:</strong> ${transaction.date}</p>
+                <p><strong>Name:</strong> ${transaction.name}</p>
+                <p><strong>CBU:</strong> ${transaction.CBU}</p>
+            </li>
+            <br>
+        `);
     });
-}    
+}
+
+/* Captures the select value */
+$(document).ready(function(){
+
+    showTransactions();
+
+    $('#filterTransaction').change(function(){
+
+        showTransactions($(this).val());
+
+    });
+
+});
 
 
 

@@ -16,15 +16,19 @@
     </header>
 
     <main class="container"> 
+        <span class="container d-flex flex-column align-items-center"> 
         <h3 id="currentBalance" class="stretch balanceDigit"> $0,00 USD</h3>
-        <label for="balance">Current Balance</label>
-        <div class="form-group" id="mssgPages"></div>
+        <label for="balance" class="text-secondary">Current Balance</label>
+        <hr class="my-2 border-top border-muted">
+        </span>
+        
+        <div class="form-group" id="mssgPages" style="display:contents;"></div>
             
             <button     
                 id="btnDeposit" 
                 data-screen="Deposit" 
                 data-page="deposit.html"  
-                class="btn btn-primary">
+                class="btn btn-primary mt-2">
                 Deposit
             </button>
 
@@ -49,7 +53,7 @@
     <footer>
 
     </footer>
-
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="script.js"></script>
 </body>
 
