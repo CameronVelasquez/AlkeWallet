@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alke-Wallet - Send Money</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="card">
+    <header>
+        <h2>Send Money</h2>
+        <hr>
+    </header>
+    <main class="container">
+        <form class="stretch">
+            <div class="form-group">
+                <label>Search the transfer schedule:</label>
+                <input type="text" for="searchContact" class="form-control" name="searchContact" placeholder="Search by name, CBU or email" required>
+                <button type="submit" id="searchContact" class="btn btn-primary">Search</button>
+                <button type="button" class="btn btn-secondary">Add Contact</button>
+            </div>
+            <br>
+            <section id="contactSection">
+                <h3>Contacts</h3>
+                <br>
+                <ul id="contactList" class="list-group">
+                    <li class="list-group-item">
+                        <section class="contact-info" >
+                            <h6 class="contact-name">Name: Name Test</h6>
+                            <p>CBU: 11111111-1</p>
+                            <p>Alias: Name Alias</p>
+                            <p>Bank: Bank Test</p>
+                        </section>                    
+                    </li>
+                    <li class="list-group-item">
+                        <section class="contact-info">
+                        <h6 class="contact-name">Name: Name Test</h6>
+                        <p>CBU: 11111111-1</p>
+                        <p>Alias: Name Alias</p>
+                        <p>Bank: Bank Test</p>
+                        </section>
+                    </li>
+                    <li class="list-group-item">
+                        <section class="contact-info">
+                        <h6 class="contact-name">Name: Name Test</h6>
+                        <p class="">CBU: 11111111-1</p>
+                        <p>Alias: Name Alias</p>
+                        <p>Bank: Bank Test</p>
+                        </section>
+                    </li>
+                </ul>
+                <button type="submit" class="btn btn-primary">Send Money</button>
+            </section>            
+        </form>
+        <a href="menu.html"  class="btn btn-secondary" style="text-decoration: none">Return to Menu</a>
+    </main>
+    <footer></footer>
+</body>
+</html>

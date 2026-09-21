@@ -1,0 +1,107 @@
+/* General Body */
+body {
+    padding: 0px;
+    margin: 0px;
+    width:50%;
+    display:flex;
+    flex-direction:column;
+    margin-left:25%;
+    margin-right:25%;
+    margin-top:5%;
+    margin-bottom:5%;
+
+}
+
+main {
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+}
+
+/* Header */
+header {
+    text-align: center;
+    padding-top:20px;
+    padding-bottom:0%;
+    border-radius:5px;
+    width: 100%;
+}
+header h2{
+  display: inline-flex;
+}
+
+hr {
+  margin: 0%;
+  padding:0%;
+  width:100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+header:hover{background-color:#c7ccd6;}
+header h2:hover{border-radius: 10px;}
+
+/* main */
+
+#amountDigit {
+  margin-top: 15px;
+  font-weight: bolder;
+  text-align: center;
+}
+#depositAmountForm{
+    margin-top: 15px;
+}
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.stretch {
+    width: 70%;
+    height: min-content;
+    margin-top: 15px;
+    margin-bottom:8px;
+}
+
+/* deposit form */
+#depositAmountForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Login labels */
+.labelLogin{
+    padding-left:3px;
+}
+
+.labelLogin:hover{
+  background-color:#c7ccd6;
+  width:100%;
+  border-radius:5px;
+}
+
+.list-group-item:hover{
+  background-color: #c7ccd6;
+}
+/* transaction list */
+.transactionList {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Buttons */
+.btn-primary,
+.btn-secondary {
+    margin: 5px 0;
+    width: 100%;
+}
+
+footer {
+    margin-top: 20px;
+    text-align: center;
+}
